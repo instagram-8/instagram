@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>Instagram Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Grand+Hotel&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="page">
+    <div class="language-switcher">
+      <button type="button" aria-label="Change language">English (UK)</button>
+    </div>
+    <section class="hero">
+        <div class="collage" aria-hidden="true">
+          <img class="collage-img" src="./landing-2x.png" alt="Instagram collage preview" />
+        </div>
+
+      <div class="panel">
+        <div class="card">
+          <div class="brand" aria-label="Instagram">
+            <span class="brand-word">Instagram</span>
+            <img class="brand-icon" src="./60ed83ab035dbe00046c24b8.png" alt="Instagram logo" />
+          </div>
+          <form class="form" autocomplete="on">
+            <label class="sr-only" for="user">Username, email or mobile number</label>
+            <input id="user" name="user" type="text" placeholder="Username, email or mobile number" required />
+            <label class="sr-only" for="pass">Password</label>
+            <div class="input-wrap">
+              <input id="pass" name="pass" type="password" placeholder="Password" required />
+              <button type="button" class="toggle-eye" aria-label="Show password"><span>Show</span></button>
+            </div>
+            <button type="submit">Log in</button>
+          </form>
+
+          <div class="divider"><span></span><p>OR</p><span></span></div>
+
+          <button class="facebook" type="button">
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" class="fb-icon"><path d="M15.12 8.64H13.5V7.2c0-.48.32-.59.55-.59h1.05V4.54L13.53 4.5c-2.33 0-2.87 1.74-2.87 2.86v1.28H9v2.1h1.66v5.86h2.84v-5.86h1.9l.27-2.1z"></path></svg>
+            Log in with Facebook
+          </button>
+          <a class="forgot" href="#">Forgot password?</a>
+        </div>
+
+        <div class="card slim">
+          <p>Don't have an account? <a href="#">Sign up</a></p>
+          <button type="button" class="create-account">Create new account</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="meta">from Meta</footer>
+    <footer class="footer-links">
+      <a href="#">Meta</a>
+      <a href="#">About</a>
+      <a href="#">Blog</a>
+      <a href="#">Jobs</a>
+      <a href="#">Help</a>
+      <a href="#">API</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Locations</a>
+      <a href="#">Instagram Lite</a>
+      <a href="#">Meta Verified</a>
+    </footer>
+    <footer class="footer-bottom">English (UK) © 2025 Instagram from Meta</footer>
+  </main>
+  <script type="module" src="./main.js"></script>
+  <script>
+    const passInput = document.getElementById('pass');
+    const toggleBtn = document.querySelector('.toggle-eye');
+
+    const isMobile = () => window.matchMedia('(max-width: 520px)').matches;
+
+    if (passInput && toggleBtn) {
+      const labelSpan = toggleBtn.querySelector('span');
+
+      const updateEyeVisibility = () => {
+        toggleBtn.style.display = passInput.value ? 'flex' : 'none';
+      };
+
+      toggleBtn.addEventListener('click', () => {
+        const isHidden = passInput.type === 'password';
+        passInput.type = isHidden ? 'text' : 'password';
+        toggleBtn.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+        if (labelSpan) labelSpan.textContent = isHidden ? 'Hide' : 'Show';
+      });
+
+      passInput.addEventListener('input', updateEyeVisibility);
+      window.addEventListener('resize', updateEyeVisibility);
+      updateEyeVisibility();
+    }
+
+    const allInputs = document.querySelectorAll('input');
+    if (allInputs.length) {
+      allInputs.forEach((input) => {
+        input.addEventListener('focus', () => {
+          if (isMobile()) {
+            document.body.classList.add('keyboard-open');
+          }
+        });
+        input.addEventListener('blur', () => {
+          setTimeout(() => {
+            const active = document.activeElement;
+            if (!active || active.tagName !== 'INPUT') {
+              document.body.classList.remove('keyboard-open');
+            }
+          }, 0);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
